@@ -7,6 +7,9 @@ import { User } from '../model/user';
   providedIn: 'root'
 })
 export class UserService {
+  like(key: string, value: string) {
+    throw new Error('Method not implemented.');
+  }
 
   endpoint: string = 'http://localhost:3000/users';
 
@@ -35,6 +38,9 @@ export class UserService {
    * Delete a user from the database.
    * The method is: this.http.delete
    */
+  remove(user: User): Observable<User> {
+    return this.http.delete<User>(`${this.endpoint}/${user.id}`);
+  }
 
 
 
@@ -42,6 +48,9 @@ export class UserService {
    * Create a user in the database.
    * The method is: this.http.post
    */
+  create(user: User): Observable<User> {
+    return this.http.post<User>(`${this.endpoint}/${user.id}`, user);
+  }
 
 
 
@@ -49,5 +58,8 @@ export class UserService {
    * Update a user in the database.
    * The method is: this.http.patch
    */
+  update(user: User): Observable<User> {
+    return this.http.patch<User>(`${this.endpoint}/${user.id}`, user);
+  }
 
 }

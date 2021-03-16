@@ -4,13 +4,21 @@
     <form #userForm="ngForm">
       <input name="id" type="hidden" [(ngModel)]="user.id">
       <div class="form-group">
-        <label>Name</label>
+        <label for="name">Name</label>
         <!-- Validation: min 8 char, max 40 char, required -->
         <input
         class="form-control"
         type="text"
         name="name"
-        [(ngModel)]="user.name">
+        [(ngModel)]="user.name"
+        aria-describedby="name"
+        required
+        #userName="ngModel"
+        min="8"
+        max="40">
+        <div [hidden]="userName.valid || userName.pristine" class="text-danger">
+          Please choose a name.
+        </div>
       </div>
       <div class="form-group">
         <label>Email</label>
@@ -39,9 +47,10 @@
           <option [ngValue]="false">inactive</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary btn-block mt-5">
+      <button [disabled]="!userForm.form.valid" (click)="onUpdate()" type="submit" class="btn btn-primary btn-block mt-5">
         <i class="fa fa-save"></i>
       </button>
+
     </form>
   </div>
 </div>

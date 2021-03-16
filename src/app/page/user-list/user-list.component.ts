@@ -11,12 +11,36 @@ import { UserService } from 'src/app/service/user.service';
 export class UserListComponent implements OnInit {
 
   users$: Observable<User[]> = this.userService.getAll();
+  order: string = 'name';
+  reverse: boolean = false;
+  userList$: any;
 
   constructor(
     private userService: UserService,
   ) { }
 
   ngOnInit(): void {
+    this.userService.getAll();
   }
+
+  onDelete(user: User): void {
+    if (confirm("Are you sure you want to delete the bill?")) {
+      this.userService.remove(user).subscribe(
+        () => {
+          this.userService.getAll();
+        }
+        );
+      }
+  }
+
+  setOrder(value: string): void
+  {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+  }
+
+
 
 }
